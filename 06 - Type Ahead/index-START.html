@@ -16,6 +16,48 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const cities = [];
+const vis = fetch(endpoint)
+  .then(blob => blob.json())
+  .then(data => cities.push(...data));
+
+function findMatches(wordToMatch, cities) {
+  return cities.filter((city) => {
+    const regex = new RegExp(wordToMatch, 'gi');
+    return city.city.match(regex) || city.state.match(regex);
+  });
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function displayMatches() {
+  const matches = findMatches(this.value, cities);
+  const matchedNodes = matches.map((city) => {
+    const regex = new RegExp(this.value, 'gi');
+    const cityName = city.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = city.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(city.population)}</span>
+      </li>
+    `;
+  }).join('');
+  suggestions.innerHTML = matchedNodes;
+
+  // suggestions.appendChild();
+  // matches.forEach((match) => {
+  //   suggest
+  // });
+  // append the results of findMatches to the DOM
+    // clear the initial li's in suggestions
+    // for each results in the array, append it as a list item to suggestions
+}
+const input = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+input.addEventListener('keyup', displayMatches);
 
 </script>
   </body>
