@@ -46,15 +46,8 @@ function displayMatches() {
     `;
   }).join('');
   suggestions.innerHTML = matchedNodes;
-
-  // suggestions.appendChild();
-  // matches.forEach((match) => {
-  //   suggest
-  // });
-  // append the results of findMatches to the DOM
-    // clear the initial li's in suggestions
-    // for each results in the array, append it as a list item to suggestions
 }
+
 const input = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
 input.addEventListener('keyup', displayMatches);
