@@ -21,8 +21,6 @@ const skipButtons = document.querySelectorAll('[data-skip]');
 const progressBar = document.querySelector('.progress__filled');
 // SLIDERS:
 const sliders = document.querySelectorAll('.player__slider');
-const volume = sliders[0];
-const playbackRate = sliders[1];
 
 // build our functions
 /*
@@ -42,7 +40,7 @@ for spec6:
 */
 
 function togglePlay() {
-  this.paused ? this.play() : this.pause();
+  video.paused ? video.play() : video.pause();
 }
 
 function updatePlayButton() {
@@ -50,12 +48,12 @@ function updatePlayButton() {
 }
 
 function skip() {
-  console.log(this);
+  video.currentTime += parseInt(this.dataset.skip);
 }
 
-// function changeVolume() {
-
-// }
+function handleRangeUpdate() {
+  video[this.name] = this.value;  
+}
 
 
 // hook up event listeners
@@ -64,6 +62,7 @@ video.addEventListener('play', updatePlayButton);
 video.addEventListener('pause', updatePlayButton);
 
 skipButtons.forEach(button => button.addEventListener('click', skip));
+sliders.forEach(slider => slider.addEventListener('change', handleRangeUpdate));
 
 
 
