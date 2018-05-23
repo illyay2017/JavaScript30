@@ -59,6 +59,28 @@
 
 <script>
 
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    //--- > ES 5 version with quotes needing to be escaped:
+    // const audio = document.querySelector("audio[data-key=\"" + e.keyCode + "\"]");
+    if (!audio) return;
+    // without the below line (resetting currentTime), hitting a key repeatedly does not 
+    // necessarily play it over and over, because it may already
+    // be playing!
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+  };
+
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return; // skip it if it's not a transform
+    e.target.classList.remove('playing'); // can substitute e.target with "this"
+  };
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 </script>
 
 

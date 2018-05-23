@@ -7,7 +7,6 @@
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
-
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
@@ -18,28 +17,67 @@
     }
 
     // Regular
+    console.log('Hello');
 
     // Interpolated
+    console.log('Hello, I am a %s string!', 'PASSED IN');
 
     // Styled
+    console.log('%c Hello, I am some great text', 'font-size: 20px')
 
     // warning!
+    console.warn('This is a VERY scary warning!!!');
 
     // Error :|
+    console.error('Something went wrong');
 
     // Info
+    console.info('Some kind of information you should know about');
 
     // Testing
+    const p = document.querySelector('p');
+    console.assert(1 === 1, 'This should not show up because this assertion should pass');
+    console.assert(1 === 2, 'This should show up because this assertion should fail');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+    console.clear();
 
     // Grouping together
+    dogs.forEach((dog) => {
+      console.group(`${dog.name}`); // could use groupCollapsed
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.clear();
 
     // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/illyay2017')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+    // table
+    console.table(dogs);
 
   </script>
 </body>

@@ -7,6 +7,40 @@
 </head>
 <body>
 <script>
+  let pressed = [];
+  const combos = {
+    'illya': 5,
+    'bryce': 5
+  };
+  var maxComboLength = 5;
+
+  window.addEventListener('keyup', (e) => {
+    pressed.push(e.key.toLowerCase());
+    if (pressed.length > maxComboLength) {
+      pressed = pressed.slice(1);
+    };
+    let keySequence = '';
+    pressed.forEach((char) => {
+      keySequence += char;
+      if (combos[keySequence]) {
+        alert('FATALITY!');
+        cornify_add();
+        pressed = [];
+      }
+    });
+  });
+
+  function addSecret(combo) {
+    if (typeof combo !== 'string') return;
+    if (!combos[combo.toLowerCase()]) {
+      combos[combo.toLowerCase()] = combo.length;
+      if (maxComboLength < combo.length) {
+        maxComboLength = combo.length;
+      }
+    }
+    return;
+  };
+
 </script>
 </body>
 </html>
