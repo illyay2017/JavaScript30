@@ -181,7 +181,74 @@
       Video 58
     </li>
   </ul>
-<script>
+<script> 
+
+const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+const seconds = timeNodes.map((node) => {
+  const timeString = node.dataset.time;
+  const [mins, secs] = timeString.split(':');
+  return (parseFloat(mins) * 60) + parseFloat(secs);
+});
+
+const totalSeconds = seconds.reduce((acc, val) => acc += val, 0);
+// console.log(totalSeconds / 60 / 60);
+let secondsLeft = totalSeconds;
+const hours = Math.floor(secondsLeft / 3600);
+secondsLeft -= hours * 3600;
+const minutes = Math.floor(secondsLeft / 60);
+secondsLeft -= minutes * 60;
+
+console.log(`The total duration is ${hours} hours, ${minutes} minutes and ${secondsLeft} seconds`);
+
+// console.log(seconds);
+/* BELOW IS MY ORIGINAL APPROACH
+
+  const videoNodes = Array.from(document.querySelector('.videos').children);
+  const durations = videoNodes.map(node => node.attributes['data-time'].nodeValue);
+  console.log(durations);
+  // const 
+  // const totalDuration = durations.reduce(())
+  const parseTime = (timeString) => {
+    let hoursMinutesSeconds = timeString.split(':');
+    let numberfied = hoursMinutesSeconds.map(time => Number(time));
+    return numberfied.length === 3 ? 
+      ([numberfied[0], numberfied[1], numberfied[2]])
+        :
+        numberfied.length === 2 ?
+          ([0, numberfied[0], numberfied[1]])
+            :
+            numberfied.length === 1 ?
+              ([0, 0, numberfied[1]])
+                :
+              null
+  };
+
+  const parsedDurations = durations.map(duration => parseTime(duration));
+  console.log(parsedDurations);
+
+  let totalDuration = parsedDurations.reduce((acc, val) => {
+    let accumulatedHours = acc[0];
+    let accumulatedMinutes = acc[1];
+    let accumulatedSeconds = acc[2];
+    acc[2] += val[2];
+    if (acc[2] >= 60) {
+      acc[1] += 1;
+      acc[2] -= 60;
+    }
+    acc[1] += val[1];
+    if (acc[1] >= 60) {
+      acc[0] += 1;
+      acc[1] -= 60;
+    }
+    acc[0] += val[0];
+    return acc;
+  });
+
+  console.log(totalDuration);
+
+*/
+
+
 </script>
 </body>
 </html>
