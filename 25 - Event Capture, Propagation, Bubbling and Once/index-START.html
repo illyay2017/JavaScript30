@@ -37,8 +37,26 @@
   }
 </style>
 
-<button></button>
+<button>DON'T CLICK HERE NOMATTER WHAT</button>
 <script>
+
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    // console.log(this);
+    // console.log(e.target);
+    // if (this !== e.target) return;
+    // e.stopPropagation();
+    console.log(this.classList.value);
+  }
+
+  function gameOver() {
+    alert('GAME OVER!');
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {capture: false, once: true}));
+  button.addEventListener('click', gameOver, {once: true});
 
 </script>
 </body>
