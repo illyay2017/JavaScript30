@@ -15,6 +15,34 @@
   </div>
 
 <script>
+  const speed = document.querySelector('.speed');
+  const bar = document.querySelector('.speed-bar');
+  const video = document.querySelector('video');
+
+  function changeSpeed(playbackRate) {
+    video.playbackRate = playbackRate;
+  };
+
+  function updateBar(e) {
+    const y = e.pageY - this.offsetTop;
+    let fraction = y / this.offsetHeight;
+    const min = 0.5;
+    const max = 4;
+    const height = Math.round(fraction * 100) + '%';
+    const playbackRate = fraction * (max - min) + min;
+    bar.style.height = height;
+    bar.textContent = `${playbackRate.toFixed(2)}x`;
+    changeSpeed(playbackRate);
+  };
+
+  function togglePlay() {
+    video.paused ? video.play() : video.pause();
+  }
+
+  speed.addEventListener('mousemove', updateBar);
+  video.addEventListener('click', togglePlay);
+
+
 </script>
 </body>
 </html>
