@@ -4,6 +4,7 @@ const endTime = document.querySelector('.display__end-time');
 const buttons = document.querySelectorAll('[data-time]');
 
 function timer(seconds) {
+  clearInterval(timeLeft);
   const now = Date.now();
   const then = now + seconds * 1000;
   displayTimeLeft(seconds);
@@ -36,4 +37,16 @@ function displayEndTime(timestamp) {
   endTime.textContent = `Be Back At ${hours < 10 ? '0' + hours : hours}: ${minutes < 10 ? '0' + minutes : minutes}`;
 }
 
-buttons.forEach(button => button.addEventListener('click', timer));
+function startTimer() {
+  let time = parseInt(this.dataset.time);
+  timer(time);
+}
+
+
+
+buttons.forEach(button => button.addEventListener('click', startTimer));
+document.customForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  timer(this.minutes.value * 60);
+  this.reset();
+});
